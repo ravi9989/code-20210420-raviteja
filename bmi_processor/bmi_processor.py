@@ -25,13 +25,16 @@ Categories = {
     6 : {"bmi_category" : 'very severe obese', "health_risk" : 'very very high risk', "bmi" : 0}
 }
 
-"""
-binary searched for position where i can insert the BMI so that the sort property wont loose
-and returning the category details
-"""
 
 @lru_cache(maxsize=128)
 def get_bmi_details(bmi):
+
+    """
+    input : int
+    output : dict
+    binary searched for position where i can insert the BMI so that the sort property wont loose
+    and returning the category details
+    """
 
     if bmi == -1:
         
@@ -46,18 +49,20 @@ def get_bmi_details(bmi):
     return Categories[idx/2 + 1]
 
 
-"""
-cm --> m
-"""
-def convert_cm_to_m(cm):
 
+def convert_cm_to_m(cm):
+    """
+    cm --> m
+    """
     return cm / 100.0
 
-"""
-BMI = weight/ (hight^2) 
 
-"""
 def caluclate_bmi(hight, weight):
+
+    """
+    BMI = weight/ (hight^2) 
+
+    """
     try:
 
         hight = convert_cm_to_m(hight)
@@ -81,28 +86,42 @@ with open('file.json') as infile:
 
 """
 
-"""
-read json file
-"""
-def read_json(file_name):
 
-    with open(file_name) as f:
-        data = json.load(f)
-    
-    return data
+def read_json(file_name):
+    """
+    read json file
+    """
+    try: 
+
+        with open(file_name) as f:
+            data = json.load(f)
+        
+        return data
+
+    except Exception:
+
+        raise Exception
+
 
 def write_json(file_name, json_data):
+    try:
 
-    json_object = json.dumps(json_data, indent = 4)
-    with open(file_name, "w") as outfile:
-        outfile.write(json_object)
+        json_object = json.dumps(json_data, indent = 4)
+        with open(file_name, "w") as outfile:
+            outfile.write(json_object)
 
-    return True
+        return True
+        
+    except:
 
-"""
-iterating and processing each record by using above helper functions
-"""
+        raise Exception
+
+
 def process_data(data):
+
+    """
+    iterating and processing each record by using above helper functions
+    """
 
     if not data:
 
@@ -111,7 +130,7 @@ def process_data(data):
     record = 0
     for i in data:
 
-        if i["HeightCm"] and i["WeightKg"]:
+        if i.get("HeightCm", "") and i.get("WeightKg", ""):
 
             print("processing ---- record ----", record, "--->", i)
 
@@ -131,22 +150,29 @@ def process_data(data):
 
 def process_bmi_json_files(input_file, ouptut_file):
 
-    json_data = read_json(input_file)
+    try: 
 
-    processed_data = process_data(json_data)
+        json_data = read_json(input_file)
 
-    if not process_data:
+        processed_data = process_data(json_data)
 
-        return False, "exit_code 1 no data to process"
-    
-    write_status = write_json(ouptut_file, processed_data)
+        if not process_data:
 
-    if not write_status:
-        print("exit code 1")
+            return False, "exit_code 1 no data to process"
+        
+        write_status = write_json(ouptut_file, processed_data)
 
-        return False, "exit_code 1 problem while writing into ouput file"
+        if not write_status:
+            print("exit code 1")
 
-    return True, "Completed"
+            return False, "exit_code 1 problem while writing into ouput file"
+
+        return True, "Completed"
+
+    except:
+
+        return False, Exception 
+
 
 # status, message = process_bmi_json_files('../data/test.json', '../data/test_out.json')
 # print(status, message)
