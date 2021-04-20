@@ -8,12 +8,6 @@ ROOT = os.path.dirname(__file__)
 VERSION_RE = re.compile(r'''__version__ = ['"]([0-9.]+)['"]''')
 
 
-requires = [
-    'functools',
-    'bisect'
-]
-
-
 def get_version():
     init = open(os.path.join(ROOT, 'bmi_processor', '__init__.py')).read()
     return VERSION_RE.search(init).group(1)
@@ -27,7 +21,5 @@ setup(
     author_email='atmravi395@gmail.com',
     url='https://github.com/ravi9989/code-20210420-raviteja',
     scripts=[],
-    packages=find_packages(exclude=['tests*']),
-    install_requires=requires,
-    license='unlicense'
+    packages=find_packages(exclude=['tests*'])
 )
