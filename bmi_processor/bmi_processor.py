@@ -16,6 +16,7 @@ categorised as index as if BMI falls in 1st range then the catgory and health ri
 
 """
 Categories = {
+    -1 : {'bmi_category' : 'NA', "health_risk" : 'NA', "bmi" : -1},
     1 : {'bmi_category' : 'under weight', "health_risk" : 'malnutrion risk', "bmi" : 0},
     2 : {'bmi_category' : 'normal weight', "health_risk" : 'low risk', "bmi" : 0},
     3 : {"bmi_category" : 'over weight', "health_risk" : 'enhanced risk',"bmi" : 0},
@@ -31,6 +32,10 @@ and returning the category details
 
 @lru_cache(maxsize=128)
 def get_bmi_details(bmi):
+
+    if bmi == -1:
+        
+        return Categories[-1]
 
     idx = bisect.bisect_right(Ranges,bmi)-1
     if idx%2 != 0:
@@ -53,9 +58,14 @@ BMI = weight/ (hight^2)
 
 """
 def caluclate_bmi(hight, weight):
+    try:
 
-    hight = convert_cm_to_m(hight)
-    return round(weight/(hight**2))
+        hight = convert_cm_to_m(hight)
+        return round(weight/(hight**2), 1)
+
+    except:
+
+        return -1
 
 
 """
@@ -138,5 +148,5 @@ def process_bmi_json_files(input_file, ouptut_file):
 
     return True, "Completed"
 
-status, message = process_bmi_json_files('../data/test.json', '../data/test_out.json')
-print(status, message)
+# status, message = process_bmi_json_files('../data/test.json', '../data/test_out.json')
+# print(status, message)

@@ -16,7 +16,7 @@ requires = [
 
 
 def get_version():
-    init = open(os.path.join(ROOT, 'event_handler', '__init__.py')).read()
+    init = open(os.path.join(ROOT, 'bmi_processor', '__init__.py')).read()
     return VERSION_RE.search(init).group(1)
 
 
