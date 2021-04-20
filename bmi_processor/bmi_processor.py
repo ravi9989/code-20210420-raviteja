@@ -32,10 +32,10 @@ and returning the category details
 @lru_cache(maxsize=128)
 def get_bmi_details(bmi):
 
-    idx = bisect.bisect_right(Ranges,100)-1
+    idx = bisect.bisect_right(Ranges,bmi)-1
     if idx%2 != 0:
         idx -= 1
-
+    
     Categories[idx/2 + 1]["bmi"] = bmi
 
     return Categories[idx/2 + 1]
