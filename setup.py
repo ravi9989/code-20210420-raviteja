@@ -26,7 +26,7 @@ setup(
     description='This pacakge can process ht wt to bmi and categorise bmi',
     author='Ravi Teja',
     author_email='atmravi395@gmail.com',
-    url='git@github.com:eunimart/vdezi_event_handler.git',
+    url='https://github.com/ravi9989/code-20210420-raviteja',
     scripts=[],
     packages=find_packages(exclude=['tests*']),
     install_requires=requires,
