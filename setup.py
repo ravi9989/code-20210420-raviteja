@@ -9,7 +9,6 @@ VERSION_RE = re.compile(r'''__version__ = ['"]([0-9.]+)['"]''')
 
 
 requires = [
-    'json',
     'functools',
     'bisect'
 ]
