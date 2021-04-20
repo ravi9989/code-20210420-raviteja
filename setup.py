@@ -21,7 +21,7 @@ def get_version():
 
 
 setup(
-    name='bmi_processor',
+    name='bmi_processor_beta',
     version=get_version(),
     description='This pacakge can process ht wt to bmi and categorise bmi',
     author='Ravi Teja',
